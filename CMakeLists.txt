@@ -32,3 +32,145 @@
 #  
 # Contributors:
 #    wobe-systems GmbH
+
+#set(CMAKE_VERBOSE_MAKEFILE on)
+
+#######################################################
+## minimum required cmake version 
+cmake_minimum_required(VERSION 3.1)
+
+#######################################################
+## set build parameter
+#######################################################
+SET (AXL_TARGET_PLATFORM win_x86-64 CACHE STRING "set the build target")
+
+#######################################################
+## set version parameter
+set (AXL_MAJOR_VERSION 0)
+set (AXL_MINOR_VERSION 7)
+set (AXL_MICRO_VERSION 1)
+
+#
+#include (InstallRequiredSystemLibraries)
+
+set (CPACK_PACKAGE_VERSION_MAJOR "${AXL_MAJOR_VERSION}")
+set (CPACK_PACKAGE_VERSION_MINOR "${AXL_MINOR_VERSION}")
+set (CPACK_PACKAGE_VERSION_PATCH "${AXL_MICRO_VERSION}")
+set (PLATFORM_FOUND false)
+set (CORE_TARGET_NAME libaxl)
+#set (TEST_TARGET_NAME libaxltest)
+
+#######################################################
+## set paths to look up binaries, libraries and includes
+set (CMAKE_PREFIX_PATH  /usr)
+set (CMAKE_PREFIX_PATH  ${CMAKE_PREFIX_PATH} /usr/local)
+
+#######################################################
+## LINUX 64 bit
+if (${AXL_TARGET_PLATFORM} STREQUAL linux_x86-64)
+  set(PROJECT linux_x86-64)
+  
+  set(IS64BIT true)
+  #set(BUILD_TEST true)
+  #set(VORTEX-TLS-INCLUDE "../../../Komponenten/Vortex/${VORTEXVER}/Debian/tls")
+  #set(VORTEX-SASL-INCLUDE "../../../Komponenten/Vortex/${VORTEXVER}/Debian/sasl")
+  
+
+  set(CPACK_SET_DESTDIR ON)
+  set(CPACK_RESOURCE_FILE_LICENSE ../COPYING)
+  
+  include (CPack)
+
+  #set (CMAKE_FIND_LIBRARY_PREFIXES lib)
+  #set (CMAKE_FIND_LIBRARY_SUFFIXES .so)
+
+  set (PLATFORM_FOUND true)  
+endif (${AXL_TARGET_PLATFORM} STREQUAL linux_x86-64)
+
+
+if (${PLATFORM_FOUND} STREQUAL true)
+
+Message(PLATFORM FOUND)
+
+  #######################################################
+  ## Project / Solution- File:
+  PROJECT( axl )
+  
+  #######################################################
+  ## Source and destination directories:
+  ADD_SUBDIRECTORY( src ${PROJECT}/axl)
+  ADD_SUBDIRECTORY( babel ${PROJECT}/babel)
+  ADD_SUBDIRECTORY( ns ${PROJECT}/ns)
+#  ADD_SUBDIRECTORY( test ${PROJECT}/test)
+
+  
+
+  #if (${BUILD_TLS} STREQUAL yes)
+  #  ADD_SUBDIRECTORY( tml-tls/src ${PROJECT}/tml-tls)
+  #endif (${BUILD_TLS} STREQUAL yes)
+  # ADD_SUBDIRECTORY( tml-sasl/src ${PROJECT}/tml-sasl)
+  
+  #if (${BUILD_TEST} STREQUAL true)
+    #######################################################
+    ## Regression test
+   # if (${IS64BIT} STREQUAL false)
+   #   set(CORE_TARGET_NAME_LOCAL  ${CORE_TARGET_NAME}${TML_API_VERSION})
+   #   set(TEST_TARGET_NAME_LOCAL ${TEST_TARGET_NAME})
+   #   set(RTTEST_TARGET_NAME_LOCAL ${RTTEST_TARGET_NAME})
+   #	  set(TMLRTTEST_TARGET_NAME_LOCAL ${TMLRTTEST_TARGET_NAME})
+   # endif (${IS64BIT} STREQUAL false)
+   # if (${IS64BIT} STREQUAL true)
+   #   set(CORE_TARGET_NAME_LOCAL ${CORE_TARGET_NAME}${TML_API_VERSION}_64)
+   #   set(TEST_TARGET_NAME_LOCAL ${TEST_TARGET_NAME}64)
+   #   set(RTTEST_TARGET_NAME_LOCAL ${RTTEST_TARGET_NAME}64)
+   #   set(TMLRTTEST_TARGET_NAME_LOCAL ${TMLRTTEST_TARGET_NAME}64)
+   # endif (${IS64BIT} STREQUAL true)
+    
+    
+    #ADD_SUBDIRECTORY( test/src ${PROJECT}/test)
+    #add_dependencies(${TEST_TARGET_NAME_LOCAL} ${CORE_TARGET_NAME_LOCAL})
+    #cmake_policy(SET CMP0046 OLD)
+
+    #ADD_SUBDIRECTORY( test/regTests/sidexRegTest/src ${PROJECT}/regTests/sidexRegTest)
+    #add_dependencies(${RTTEST_TARGET_NAME_LOCAL} ${CORE_TARGET_NAME_LOCAL}) 
+    #cmake_policy(SET CMP0046 OLD)
+  #endif (${BUILD_TEST} STREQUAL true)
+else (${PLATFORM_FOUND} STREQUAL true)
+  message( SEND_ERROR "Unknown target platform / please check \"TML_TARGET_PLATFORM\"" )
+endif (${PLATFORM_FOUND} STREQUAL true)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
