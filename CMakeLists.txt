@@ -33,7 +33,7 @@
 # Contributors:
 #    wobe-systems GmbH
 
-#set(CMAKE_VERBOSE_MAKEFILE on)
+set(CMAKE_VERBOSE_MAKEFILE on)
 
 #######################################################
 ## minimum required cmake version 
@@ -101,7 +101,7 @@ Message(PLATFORM FOUND)
   ADD_SUBDIRECTORY( src ${PROJECT}/axl)
   ADD_SUBDIRECTORY( babel ${PROJECT}/babel)
   ADD_SUBDIRECTORY( ns ${PROJECT}/ns)
-  ADD_SUBDIRECTORY( test ${PROJECT}/test)
+#  ADD_SUBDIRECTORY( test ${PROJECT}/test)
 
  
 else (${PLATFORM_FOUND} STREQUAL true)
