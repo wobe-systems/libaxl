@@ -50,9 +50,6 @@ set (AXL_MAJOR_VERSION 0)
 set (AXL_MINOR_VERSION 7)
 set (AXL_MICRO_VERSION 1)
 
-#
-#include (InstallRequiredSystemLibraries)
-
 set (CPACK_PACKAGE_VERSION_MAJOR "${AXL_MAJOR_VERSION}")
 set (CPACK_PACKAGE_VERSION_MINOR "${AXL_MINOR_VERSION}")
 set (CPACK_PACKAGE_VERSION_PATCH "${AXL_MICRO_VERSION}")
@@ -71,11 +68,6 @@ if (${AXL_TARGET_PLATFORM} STREQUAL linux_x86-64)
   set(PROJECT linux_x86-64)
   
   set(IS64BIT true)
-  #set(BUILD_TEST true)
-  #set(VORTEX-TLS-INCLUDE "../../../Komponenten/Vortex/${VORTEXVER}/Debian/tls")
-  #set(VORTEX-SASL-INCLUDE "../../../Komponenten/Vortex/${VORTEXVER}/Debian/sasl")
-  
-
   set(CPACK_SET_DESTDIR ON)
   set(CPACK_RESOURCE_FILE_LICENSE ../COPYING)
   
@@ -90,56 +82,21 @@ endif (${AXL_TARGET_PLATFORM} STREQUAL linux_x86-64)
 
 if (${PLATFORM_FOUND} STREQUAL true)
 
-Message(PLATFORM FOUND)
+MESSAGE(PLATFORM FOUND)
 
-  #######################################################
-  ## Project / Solution- File:
-  PROJECT( axl )
-  
-  #######################################################
-  ## Source and destination directories:
-  ADD_SUBDIRECTORY( src ${PROJECT}/axl)
-  ADD_SUBDIRECTORY( babel ${PROJECT}/babel)
-  ADD_SUBDIRECTORY( ns ${PROJECT}/ns)
-#  ADD_SUBDIRECTORY( test ${PROJECT}/test)
+#######################################################
+## Project / Solution- File:
+PROJECT( axl )
+
+#######################################################
+## Source and destination directories:
+ADD_SUBDIRECTORY( src ${PROJECT}/axl)
+ADD_SUBDIRECTORY( babel ${PROJECT}/babel)
+ADD_SUBDIRECTORY( ns ${PROJECT}/ns)
+ADD_SUBDIRECTORY( test ${PROJECT}/test)
 
  
 else (${PLATFORM_FOUND} STREQUAL true)
-  message( SEND_ERROR "Unknown target platform / please check \"TML_TARGET_PLATFORM\"" )
+  message( SEND_ERROR "Unknown target platform / please check \"AXL_TARGET_PLATFORM\"" )
 endif (${PLATFORM_FOUND} STREQUAL true)
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
