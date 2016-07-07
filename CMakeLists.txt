@@ -54,8 +54,6 @@ set (CPACK_PACKAGE_VERSION_MAJOR "${AXL_MAJOR_VERSION}")
 set (CPACK_PACKAGE_VERSION_MINOR "${AXL_MINOR_VERSION}")
 set (CPACK_PACKAGE_VERSION_PATCH "${AXL_MICRO_VERSION}")
 set (PLATFORM_FOUND false)
-set (CORE_TARGET_NAME libaxl)
-#set (TEST_TARGET_NAME libaxltest)
 
 #######################################################
 ## set paths to look up binaries, libraries and includes
@@ -65,36 +63,42 @@ set (CMAKE_PREFIX_PATH  ${CMAKE_PREFIX_PATH} /usr/local)
 #######################################################
 ## LINUX 64 bit
 if (${AXL_TARGET_PLATFORM} STREQUAL linux_x86-64)
+
   set(PROJECT linux_x86-64)
-  
+
+
+  #Platform specific defines for Linux
+  set(OSPLATFORM "AXL_OS_UNIX (1)")  
+  set(VASPRINTF  "AXL_HAVE_VASPRINTF (1)")
+
+  configure_file (
+   "${CMAKE_SOURCE_DIR}/src/axl_config.h.in"
+   "${CMAKE_SOURCE_DIR}/src/axl_config.h")
+
   set(IS64BIT true)
   set(CPACK_SET_DESTDIR ON)
   set(CPACK_RESOURCE_FILE_LICENSE ../COPYING)
   
   include (CPack)
 
-  #set (CMAKE_FIND_LIBRARY_PREFIXES lib)
-  #set (CMAKE_FIND_LIBRARY_SUFFIXES .so)
-
   set (PLATFORM_FOUND true)  
-endif (${AXL_TARGET_PLATFORM} STREQUAL linux_x86-64)
 
+endif (${AXL_TARGET_PLATFORM} STREQUAL linux_x86-64)
 
 if (${PLATFORM_FOUND} STREQUAL true)
 
-MESSAGE(PLATFORM FOUND)
+  MESSAGE(PLATFORM FOUND)
 
-#######################################################
-## Project / Solution- File:
-PROJECT( axl )
-
-#######################################################
-## Source and destination directories:
-ADD_SUBDIRECTORY( src ${PROJECT}/axl)
-ADD_SUBDIRECTORY( babel ${PROJECT}/babel)
-ADD_SUBDIRECTORY( ns ${PROJECT}/ns)
-ADD_SUBDIRECTORY( test ${PROJECT}/test)
-
+  #######################################################
+  ## Project / Solution- File:
+  PROJECT( axl )
+  
+  #######################################################
+  ## Source and destination directories:
+  ADD_SUBDIRECTORY( src   ${PROJECT}/axl)
+  ADD_SUBDIRECTORY( babel ${PROJECT}/babel)
+  ADD_SUBDIRECTORY( ns    ${PROJECT}/ns)
+  ADD_SUBDIRECTORY( test  ${PROJECT}/test)
  
 else (${PLATFORM_FOUND} STREQUAL true)
   message( SEND_ERROR "Unknown target platform / please check \"AXL_TARGET_PLATFORM\"" )
