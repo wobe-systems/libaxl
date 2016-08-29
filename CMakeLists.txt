@@ -46,6 +46,7 @@ SET (AXL_TARGET_PLATFORM win_x86-64 CACHE STRING "set the build target")
 
 #######################################################
 ## set version parameter
+#######################################################
 set (AXL_MAJOR_VERSION 0)
 set (AXL_MINOR_VERSION 7)
 set (AXL_MICRO_VERSION 1)
@@ -57,15 +58,16 @@ set (PLATFORM_FOUND false)
 
 #######################################################
 ## set paths to look up binaries, libraries and includes
+#######################################################
 set (CMAKE_PREFIX_PATH  /usr)
 set (CMAKE_PREFIX_PATH  ${CMAKE_PREFIX_PATH} /usr/local)
 
 #######################################################
 ## LINUX 64 bit
+#######################################################
 if (${AXL_TARGET_PLATFORM} STREQUAL linux_x86-64)
 
   set(PROJECT linux_x86-64)
-
 
   #Platform specific defines for Linux
   set(OSPLATFORM "AXL_OS_UNIX (1)")  
@@ -85,16 +87,44 @@ if (${AXL_TARGET_PLATFORM} STREQUAL linux_x86-64)
 
 endif (${AXL_TARGET_PLATFORM} STREQUAL linux_x86-64)
 
+#######################################################
+## LINUX 32 bit
+#######################################################
+if (${AXL_TARGET_PLATFORM} STREQUAL linux_x86-32)
+
+  set(PROJECT linux_x86-32)
+
+  set(OSPLATFORM "AXL_OS_UNIX (1)")  
+  set(VASPRINTF  "AXL_HAVE_VASPRINTF (1)")
+
+  configure_file (
+   "${CMAKE_SOURCE_DIR}/src/axl_config.h.in"
+   "${CMAKE_SOURCE_DIR}/src/axl_config.h")
+
+  set(IS64BIT false)
+  set(CPACK_SET_DESTDIR ON)
+  set(CPACK_RESOURCE_FILE_LICENSE ../COPYING)
+  
+  include (CPack)
+
+  set (PLATFORM_FOUND true)  
+
+endif (${AXL_TARGET_PLATFORM} STREQUAL linux_x86-32)
+
+#######################################################
+
 if (${PLATFORM_FOUND} STREQUAL true)
 
   MESSAGE(PLATFORM FOUND)
 
   #######################################################
   ## Project / Solution- File:
+  #######################################################
   PROJECT( axl )
   
   #######################################################
   ## Source and destination directories:
+  #######################################################
   ADD_SUBDIRECTORY( src   ${PROJECT}/axl)
   ADD_SUBDIRECTORY( babel ${PROJECT}/babel)
   ADD_SUBDIRECTORY( ns    ${PROJECT}/ns)
