@@ -49,7 +49,7 @@ SET (AXL_TARGET_PLATFORM win_x86-64 CACHE STRING "set the build target")
 #######################################################
 set (AXL_MAJOR_VERSION 0)
 set (AXL_MINOR_VERSION 7)
-set (AXL_MICRO_VERSION 1)
+set (AXL_MICRO_VERSION 2)
 
 set (CPACK_PACKAGE_VERSION_MAJOR "${AXL_MAJOR_VERSION}")
 set (CPACK_PACKAGE_VERSION_MINOR "${AXL_MINOR_VERSION}")
@@ -110,6 +110,31 @@ if (${AXL_TARGET_PLATFORM} STREQUAL linux_x86-32)
   set (PLATFORM_FOUND true)  
 
 endif (${AXL_TARGET_PLATFORM} STREQUAL linux_x86-32)
+
+#######################################################
+## LINUX ARM 32
+#######################################################
+
+if (${AXL_TARGET_PLATFORM} STREQUAL linux_arm32)
+
+  set(PROJECT linux_arm32)
+  
+  set(OSPLATFORM "AXL_OS_UNIX (1)")  
+  set(VASPRINTF  "AXL_HAVE_VASPRINTF (1)")
+
+  configure_file (
+   "${CMAKE_SOURCE_DIR}/src/axl_config.h.in"
+   "${CMAKE_SOURCE_DIR}/src/axl_config.h")
+
+  set(IS64BIT false)
+  set(CPACK_SET_DESTDIR ON)
+  set(CPACK_RESOURCE_FILE_LICENSE ../COPYING)
+  
+  include (CPack)
+
+  set (PLATFORM_FOUND true)  
+  
+endif (${AXL_TARGET_PLATFORM} STREQUAL linux_arm32)
 
 #######################################################
 
