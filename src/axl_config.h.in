@@ -2,11 +2,16 @@
  * Axl Library axl_config.h
  * Platform dependant definitions.
  *
- * This is a generated file.  Please modify 'configure.ac'
+ * This is template file used by an internal build process 
  */
 
 #ifndef __AXL_CONFIG_H__
 #define __AXL_CONFIG_H__
+
+/**
+ * In the next line we have an optional include necessary in case of Win64
+ */
+@ADDWINHEADER@
 
 /**
  * \addtogroup axl_decl_module
@@ -24,7 +29,7 @@
  *
  * @return A \ref axlPointer reference.
  */
-#define INT_TO_PTR(integer)   ((axlPointer) (long) ((int)integer))
+#define @INTTOPTR@
 
 /**
  * @brief Allows to convert a pointer reference (\ref axlPointer),
@@ -37,7 +42,7 @@
  *
  * @return A int value.
  */
-#define PTR_TO_INT(ptr) ((int) (long) (ptr))
+#define @PTRTOINT@
 
 /**
  * @brief Allows to get current platform configuration. This is used

@@ -3,7 +3,11 @@
  *  Copyright (C) 2013 Advanced Software Production Line, S.L.
  */
 #include <axl.h>
+#ifdef AXL_NS_SUPPORT
 #include <axl_ns.h>
+#endif /* end #ifdef AXL_NS_SUPPORT */
+
+#ifdef AXL_BABEL_SUPPORT
 #include <axl_babel.h>
 
 #define test_41_iso_8859_1_value "!\"#$%'()*+,-./0123456789:;=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[]^_`abcdefghijklmnopqrstuvwxyz{|}~¡¢£¤¥¦§¨©ª«¬­®¯°±²³´µ¶·¸¹º»¼½¾¿ÀÁÂÃÄÅÆÇÈÉÊËÌÍÎÏÐÑÒÓÔÕÖ×ØÙÚÛÜÝÞßàáâãäåæçèéêëìíîïðñòóôõö÷øùúûüýþÿ"
@@ -26,6 +30,7 @@
 
 #define test_41_iso_8859_15_value "Esto es una prueba: camión, españa, y la tabla de caráteres!\"#$%()*+,-./0123456789:;=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[]^_`abcdefghijklmnopqrstuvwxyz{|}~ ¡¢£€¥Š§š©ª«¬­®¯°±²³Žµ¶·ž¹º»ŒœŸ¿ÀÁÂÃÄÅÆÇÈÉÊËÌÍÎÏÐÑÒÓÔÕÖ×ØÙÚÛÜÝÞßàáâãäåæçèéêëìíîïðñòóôõö÷øùúûüýþÿ"
 
+#endif /* end #ifdef AXL_BABEL_SUPPORT */
 #define ROUNDING_TOLERANCE 0.00001
 
 axl_bool test_50 (axlError ** _error) {
@@ -429,6 +434,7 @@ axl_bool test_42 (axlError ** error)
 	}
 
 	/* check dumped content */
+#ifdef AXL_BABEL_SUPPORT
 	if (! axl_cmp ("<?xml version='1.0' encoding='utf-8' ?><body><![CDATA[This is a test ]]>]]&gt;<![CDATA[ with not valid content &lt;![CDATA[..]]>]]&gt;<![CDATA[]]></body>",
 		       content)) {
 		printf ("Content found:    '%s'\n", content);
@@ -437,6 +443,16 @@ axl_bool test_42 (axlError ** error)
 		axl_error_report (error, -1, "Expected to find a different value for xml dump content");
 		return axl_false;
 	} /* end if */
+#else
+	if (! axl_cmp ("<?xml version='1.0' ?><body><![CDATA[This is a test ]]>]]&gt;<![CDATA[ with not valid content &lt;![CDATA[..]]>]]&gt;<![CDATA[]]></body>",
+		       content)) {
+		printf ("Content found:    '%s'\n", content);
+		printf ("Content expected: '%s'\n", 
+			"<?xml version='1.0' ?><body><![CDATA[This is a test ]]>]]&gt;<![CDATA[ with not valid content &lt;![CDATA[..]]>]]&gt;<![CDATA[]]></body>");
+		axl_error_report (error, -1, "Expected to find a different value for xml dump content");
+		return axl_false;
+	} /* end if */
+#endif /* end #ifdef AXL_BABEL_SUPPORT */
 
 	/* free content */
 	axl_free (content);
@@ -509,12 +525,14 @@ axl_bool test_42 (axlError ** error)
 		return axl_false;
 	} /* end if */
 
+#ifdef AXL_BABEL_SUPPORT
 	/* check content */
 	if (! axl_cmp (content, 
 		       "<?xml version='1.0' encoding='utf-8' ?><body><![CDATA[&lt;?xml version=&apos;1.0&apos; encoding=&apos;utf-8&apos; ?&gt;&lt;content&gt;&lt;full-name&gt;&lt;![CDATA[some data]]>]]&gt;<![CDATA[&lt;/full-name&gt;&lt;nick&gt;&lt;![CDATA[some data]]>]]&gt;<![CDATA[&lt;/nick&gt;&lt;value&gt;&lt;![CDATA[some data]]>]]&gt;<![CDATA[&lt;/value&gt;&lt;/content&gt;]]></body>")) {
 		axl_error_report (error, -1, "Expected to find different value after dump operation..\n");
 		return axl_false;
 	}
+#endif /* end #ifdef AXL_BABEL_SUPPORT */
 
 	axl_free (content);
 	axl_doc_free (doc);
@@ -523,6 +541,7 @@ axl_bool test_42 (axlError ** error)
 	return axl_true;
 }
 
+#ifdef AXL_BABEL_SUPPORT
 /** 
  * @brief Extended encoding support.
  * 
@@ -994,6 +1013,7 @@ axl_bool test_41 (axlError ** error)
 
 	return axl_true;
 }
+#endif /* end #ifdef AXL_BABEL_SUPPORT */
 
 /** 
  * @brief Avoid including recursively white spaces content into dumped
@@ -9582,6 +9602,7 @@ int main (int argc, char ** argv)
 		return -1;
 	}
 
+#ifdef AXL_BABEL_SUPPORT
 	if (test_41 (&error)) {
 		printf ("Test 41: Extended encoding support (through axl-babel)  [   OK   ]\n");
 	}else {
@@ -9590,6 +9611,7 @@ int main (int argc, char ** argv)
 		axl_error_free (error);
 		return -1;
 	}
+#endif /* end #ifdef AXL_BABEL_SUPPORT */
 
 	if (test_42 (&error)) {
 		printf ("Test 42: Checking nested CDATA support (including ']]>', '<![CDATA[' or xml documents with '<![CDATA[..]]>' decls) [   OK   ]\n");
