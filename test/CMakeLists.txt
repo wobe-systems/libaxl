@@ -10,9 +10,11 @@ source_group("Sourcefiles" FILES ${AXL_SOURCES})
 #######################################################
 
 if (${AXL_TARGET_PLATFORM} STREQUAL win_x86-64)
-  
-  set(PREPROCESSOR_DEF -DVERSION=\"0.7.2\" -D__axl_disable_broken_bool_def__ -DAXL_NS_SUPPORT -DAXL_BABEL_SUPPORT)
-
+  if (${USE_BABEL_AND_NS} STREQUAL yes)
+    set(PREPROCESSOR_DEF -DVERSION=\"${AXLVER}\" -D__axl_disable_broken_bool_def__ -DAXL_NS_SUPPORT -DAXL_BABEL_SUPPORT)
+  else (${USE_BABEL_AND_NS} STREQUAL yes)  
+    set(PREPROCESSOR_DEF -DVERSION=\"${AXLVER}\" -D__axl_disable_broken_bool_def__)
+  endif (${USE_BABEL_AND_NS} STREQUAL yes)
   set(TARGET_TEST test_01)
   set(BUILD_STATIC false)
 
@@ -23,9 +25,11 @@ endif (${AXL_TARGET_PLATFORM} STREQUAL win_x86-64)
 #######################################################
 
 if (${AXL_TARGET_PLATFORM} STREQUAL win_x86-32)
-  
-  set(PREPROCESSOR_DEF -DVERSION=\"0.7.2\" -D__axl_disable_broken_bool_def__ -DAXL_NS_SUPPORT -DAXL_BABEL_SUPPORT)
-
+  if (${USE_BABEL_AND_NS} STREQUAL yes)
+    set(PREPROCESSOR_DEF -DVERSION=\"${AXLVER}\" -D__axl_disable_broken_bool_def__ -DAXL_NS_SUPPORT -DAXL_BABEL_SUPPORT)
+  else (${USE_BABEL_AND_NS} STREQUAL yes)  
+    set(PREPROCESSOR_DEF -DVERSION=\"${AXLVER}\" -D__axl_disable_broken_bool_def__)
+  endif (${USE_BABEL_AND_NS} STREQUAL yes)
   set(TARGET_TEST test_01)
   set(BUILD_STATIC false)
 
@@ -36,8 +40,11 @@ endif (${AXL_TARGET_PLATFORM} STREQUAL win_x86-32)
 #######################################################
 
 if (${AXL_TARGET_PLATFORM} STREQUAL linux_x86-64)
-  
-  set(PREPROCESSOR_DEF -Wall -g -ansi -DTEST_DIR=../test -DSHOW_DEBUG_LOG -DAXL_NS_SUPPORT -DAXL_BABEL_SUPPORT -DVERSION=\"0.7.1.b3508\"  -D__axl_disable_broken_bool_def__) 
+  if (${USE_BABEL_AND_NS} STREQUAL yes)
+    set(PREPROCESSOR_DEF -Wall -g -ansi -DTEST_DIR=../test -DSHOW_DEBUG_LOG -DAXL_NS_SUPPORT -DAXL_BABEL_SUPPORT -DVERSION=\"${AXLVER}\"  -D__axl_disable_broken_bool_def__)
+  else (${USE_BABEL_AND_NS} STREQUAL yes)  
+    set(PREPROCESSOR_DEF -Wall -g -ansi -DTEST_DIR=../test -DSHOW_DEBUG_LOG -DVERSION=\"${AXLVER}\"  -D__axl_disable_broken_bool_def__)
+  endif (${USE_BABEL_AND_NS} STREQUAL yes)
   set(TARGET_TEST test_01)
   set (EXECUTABLE_OUTPUT_PATH  ${CMAKE_BINARY_DIR}/bin)
 
@@ -48,8 +55,11 @@ endif (${AXL_TARGET_PLATFORM} STREQUAL linux_x86-64)
 #######################################################
 
 if (${AXL_TARGET_PLATFORM} STREQUAL linux_x86-32)
-  
-  set(PREPROCESSOR_DEF -Wall -g -ansi -m32 -DTEST_DIR=../test -DSHOW_DEBUG_LOG -DAXL_NS_SUPPORT -DAXL_BABEL_SUPPORT -DVERSION=\"0.7.2\"  -D__axl_disable_broken_bool_def__) 
+  if (${USE_BABEL_AND_NS} STREQUAL yes)
+    set(PREPROCESSOR_DEF -Wall -g -ansi -m32 -DTEST_DIR=../test -DSHOW_DEBUG_LOG -DAXL_NS_SUPPORT -DAXL_BABEL_SUPPORT -DVERSION=\"${AXLVER}\"  -D__axl_disable_broken_bool_def__)
+  else (${USE_BABEL_AND_NS} STREQUAL yes)  
+    set(PREPROCESSOR_DEF -Wall -g -ansi -m32 -DTEST_DIR=../test -DSHOW_DEBUG_LOG -DVERSION=\"${AXLVER}\"  -D__axl_disable_broken_bool_def__)
+  endif (${USE_BABEL_AND_NS} STREQUAL yes)
   set(CMAKE_EXE_LINKER_FLAGS "-m32")
   set(TARGET_TEST test_01)
   set (EXECUTABLE_OUTPUT_PATH  ${CMAKE_BINARY_DIR}/bin)
@@ -61,8 +71,11 @@ endif (${AXL_TARGET_PLATFORM} STREQUAL linux_x86-32)
 #######################################################
 
 if (${AXL_TARGET_PLATFORM} STREQUAL linux_arm32)
-  
-  set(PREPROCESSOR_DEF -Wall -g -ansi  -DTEST_DIR=../test -DSHOW_DEBUG_LOG -DAXL_NS_SUPPORT -DAXL_BABEL_SUPPORT -DVERSION=\"0.7.2\"  -D__axl_disable_broken_bool_def__) 
+  if (${USE_BABEL_AND_NS} STREQUAL yes)
+    set(PREPROCESSOR_DEF -Wall -g -ansi  -DTEST_DIR=../test -DSHOW_DEBUG_LOG -DAXL_NS_SUPPORT -DAXL_BABEL_SUPPORT -DVERSION=\"${AXLVER}\"  -D__axl_disable_broken_bool_def__)
+  else (${USE_BABEL_AND_NS} STREQUAL yes)  
+    set(PREPROCESSOR_DEF -Wall -g -ansi  -DTEST_DIR=../test -DSHOW_DEBUG_LOG -DVERSION=\"${AXLVER}\"  -D__axl_disable_broken_bool_def__) 
+  endif (${USE_BABEL_AND_NS} STREQUAL yes)
   set(TARGET_TEST test_01)
   set (EXECUTABLE_OUTPUT_PATH  ${CMAKE_BINARY_DIR}/bin)
 

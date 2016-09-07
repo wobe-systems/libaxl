@@ -38,7 +38,7 @@ source_group("Sourcefiles" FILES ${AXL_SOURCES})
 
 if (${AXL_TARGET_PLATFORM} STREQUAL win_x86-64)
 
-  set(PREPROCESSOR_DEF -DVERSION=\"0.7.2\" -D__axl_disable_broken_bool_def__ -DPIC -DHAVE_VSCPRINTF)
+  set(PREPROCESSOR_DEF -DVERSION=\"${AXLVER}\" -D__axl_disable_broken_bool_def__ -DPIC -DHAVE_VSCPRINTF)
   # Additional library definition file in case of Visual Studio:
   set(AXL_DEF libaxl.def)
 
@@ -59,7 +59,7 @@ endif (${AXL_TARGET_PLATFORM} STREQUAL win_x86-64)
 
 if (${AXL_TARGET_PLATFORM} STREQUAL win_x86-32)
   
-  set(PREPROCESSOR_DEF -DVERSION=\"0.7.2\" -D__axl_disable_broken_bool_def__ -DPIC -DHAVE_VSCPRINTF)
+  set(PREPROCESSOR_DEF -DVERSION=\"${AXLVER}\" -D__axl_disable_broken_bool_def__ -DPIC -DHAVE_VSCPRINTF)
   # Additional library definition file in case of Visual Studio:
   set(AXL_DEF libaxl.def)
 
@@ -80,7 +80,7 @@ endif (${AXL_TARGET_PLATFORM} STREQUAL win_x86-32)
 
 if (${AXL_TARGET_PLATFORM} STREQUAL linux_x86-64)
   
-  set(PREPROCESSOR_DEF -Wall -Werror -g -O2 -ansi -DVERSION=\"0.7.2\" -DPACKAGE_DTD_DIR=\"/usr/local/share\" -DPACKAGE_TOP_DIR=\"..\" -D__axl_disable_broken_bool_def__ -DSHOW_DEBUG_LOG -DPIC)
+  set(PREPROCESSOR_DEF -Wall -Werror -g -O2 -ansi -DVERSION=\"${AXLVER}\" -DPACKAGE_DTD_DIR=\"/usr/local/share\" -DPACKAGE_TOP_DIR=\"..\" -D__axl_disable_broken_bool_def__ -DSHOW_DEBUG_LOG -DPIC)
   set(CMAKE_SHARED_LINKER_FLAGS -O2)
   set(AXL_LOCAL axl)
   set(AXL_LOCAL_STATIC axl_static)
@@ -101,7 +101,7 @@ endif (${AXL_TARGET_PLATFORM} STREQUAL linux_x86-64)
 
 if (${AXL_TARGET_PLATFORM} STREQUAL linux_x86-32)
   
-  set(PREPROCESSOR_DEF -Wall -Werror -g -O2 -ansi -m32 -DVERSION=\"0.7.2\" -DPACKAGE_DTD_DIR=\"/usr/local/share\" -DPACKAGE_TOP_DIR=\"..\" -D__axl_disable_broken_bool_def__ -DSHOW_DEBUG_LOG -DPIC)
+  set(PREPROCESSOR_DEF -Wall -Werror -g -O2 -ansi -m32 -DVERSION=\"${AXLVER}\" -DPACKAGE_DTD_DIR=\"/usr/local/share\" -DPACKAGE_TOP_DIR=\"..\" -D__axl_disable_broken_bool_def__ -DSHOW_DEBUG_LOG -DPIC)
   set(CMAKE_SHARED_LINKER_FLAGS -O2)
   set(CMAKE_SHARED_LINKER_FLAGS "-m32")
   set(AXL_LOCAL axl)
@@ -123,7 +123,7 @@ endif (${AXL_TARGET_PLATFORM} STREQUAL linux_x86-32)
 
 if (${AXL_TARGET_PLATFORM} STREQUAL linux_arm32)
   
-  set(PREPROCESSOR_DEF -Wall -Werror -g -O2 -ansi -DVERSION=\"0.7.2\" -DPACKAGE_DTD_DIR=\"/usr/local/share\" -DPACKAGE_TOP_DIR=\"..\" -D__axl_disable_broken_bool_def__ -DSHOW_DEBUG_LOG -DPIC)
+  set(PREPROCESSOR_DEF -Wall -Werror -g -O2 -ansi -DVERSION=\"${AXLVER}\" -DPACKAGE_DTD_DIR=\"/usr/local/share\" -DPACKAGE_TOP_DIR=\"..\" -D__axl_disable_broken_bool_def__ -DSHOW_DEBUG_LOG -DPIC)
   set(CMAKE_SHARED_LINKER_FLAGS -O2)
   set(AXL_LOCAL axl)
   set(AXL_LOCAL_STATIC axl_static)

@@ -43,6 +43,14 @@ cmake_minimum_required(VERSION 3.1)
 ## set build parameter
 #######################################################
 SET (AXL_TARGET_PLATFORM win_x86-64 CACHE STRING "set the build target")
+SET (USE_BABEL_AND_NS no CACHE STRING "use axl_babel and axl_ns")
+#######################################################
+## AXL - Version (used in subdirectory cMake)
+## You can set this attribute calling cmake with
+## an aditional option for example: 
+## CMake ..... -DAXLVER=0.7.2x
+#######################################################
+SET (AXLVER 0.7.2 CACHE STRING "set AXL version")
 
 #######################################################
 ## set version parameter
@@ -207,8 +215,14 @@ if (${PLATFORM_FOUND} STREQUAL true)
   ## Source and destination directories:
   #######################################################
   ADD_SUBDIRECTORY( src   ${PROJECT}/axl)
-  ADD_SUBDIRECTORY( babel ${PROJECT}/babel)
-  ADD_SUBDIRECTORY( ns    ${PROJECT}/ns)
+  
+  #############################
+  # With axl_babel and axl_ns:
+  if (${USE_BABEL_AND_NS} STREQUAL yes)
+    ADD_SUBDIRECTORY( babel ${PROJECT}/babel)
+    ADD_SUBDIRECTORY( ns    ${PROJECT}/ns)
+  endif (${USE_BABEL_AND_NS} STREQUAL yes)
+  
   ADD_SUBDIRECTORY( test  ${PROJECT}/test)
  
 else (${PLATFORM_FOUND} STREQUAL true)
