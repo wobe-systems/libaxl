@@ -201,6 +201,58 @@ if (${AXL_TARGET_PLATFORM} STREQUAL linux_arm32)
 endif (${AXL_TARGET_PLATFORM} STREQUAL linux_arm32)
 
 #######################################################
+## FreeBSD 32
+#######################################################
+
+if (${AXL_TARGET_PLATFORM} STREQUAL freeBSD_x86-32)
+
+  set(PROJECT freeBSD_x86-32)
+  
+  set(OSPLATFORM "AXL_OS_UNIX (1)")  
+  set(INTTOPTR   "INT_TO_PTR(integer)   ((axlPointer) (long) ((int)integer))")
+  set(PTRTOINT   "PTR_TO_INT(ptr) ((int) (long) (ptr))")  
+  set(VASPRINTF  "AXL_HAVE_VASPRINTF (1)")
+
+  configure_file (
+   "${CMAKE_SOURCE_DIR}/src/axl_config.h.in"
+   "${CMAKE_SOURCE_DIR}/src/axl_config.h")
+
+  set(CPACK_SET_DESTDIR ON)
+  set(CPACK_RESOURCE_FILE_LICENSE ../COPYING)
+  
+  include (CPack)
+
+  set (PLATFORM_FOUND true)  
+  
+endif (${AXL_TARGET_PLATFORM} STREQUAL freeBSD_x86-32)
+
+#######################################################
+## FreeBSD 64
+#######################################################
+
+if (${AXL_TARGET_PLATFORM} STREQUAL freeBSD_x86-64)
+
+  set(PROJECT freeBSD_x86-64)
+  
+  set(OSPLATFORM "AXL_OS_UNIX (1)")  
+  set(INTTOPTR   "INT_TO_PTR(integer)   ((axlPointer) (long) ((int)integer))")
+  set(PTRTOINT   "PTR_TO_INT(ptr) ((int) (long) (ptr))")  
+  set(VASPRINTF  "AXL_HAVE_VASPRINTF (1)")
+
+  configure_file (
+   "${CMAKE_SOURCE_DIR}/src/axl_config.h.in"
+   "${CMAKE_SOURCE_DIR}/src/axl_config.h")
+
+  set(CPACK_SET_DESTDIR ON)
+  set(CPACK_RESOURCE_FILE_LICENSE ../COPYING)
+  
+  include (CPack)
+
+  set (PLATFORM_FOUND true)  
+  
+endif (${AXL_TARGET_PLATFORM} STREQUAL freeBSD_x86-64)
+
+#######################################################
 
 if (${PLATFORM_FOUND} STREQUAL true)
 
@@ -216,7 +268,7 @@ if (${PLATFORM_FOUND} STREQUAL true)
   #######################################################
   ADD_SUBDIRECTORY( src   ${PROJECT}/axl)
   
-  #############################
+  #########l####################
   # With axl_babel and axl_ns:
   if (${USE_BABEL_AND_NS} STREQUAL yes)
     ADD_SUBDIRECTORY( babel ${PROJECT}/babel)

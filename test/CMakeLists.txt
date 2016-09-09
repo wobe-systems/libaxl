@@ -47,6 +47,7 @@ if (${AXL_TARGET_PLATFORM} STREQUAL linux_x86-64)
   endif (${USE_BABEL_AND_NS} STREQUAL yes)
   set(TARGET_TEST test_01)
   set (EXECUTABLE_OUTPUT_PATH  ${CMAKE_BINARY_DIR}/bin)
+  set(BUILD_STATIC false)
 
 endif (${AXL_TARGET_PLATFORM} STREQUAL linux_x86-64)
 
@@ -63,6 +64,7 @@ if (${AXL_TARGET_PLATFORM} STREQUAL linux_x86-32)
   set(CMAKE_EXE_LINKER_FLAGS "-m32")
   set(TARGET_TEST test_01)
   set (EXECUTABLE_OUTPUT_PATH  ${CMAKE_BINARY_DIR}/bin)
+  set(BUILD_STATIC false)
 
 endif (${AXL_TARGET_PLATFORM} STREQUAL linux_x86-32)
 
@@ -78,8 +80,49 @@ if (${AXL_TARGET_PLATFORM} STREQUAL linux_arm32)
   endif (${USE_BABEL_AND_NS} STREQUAL yes)
   set(TARGET_TEST test_01)
   set (EXECUTABLE_OUTPUT_PATH  ${CMAKE_BINARY_DIR}/bin)
+  set(BUILD_STATIC false)
 
 endif (${AXL_TARGET_PLATFORM} STREQUAL linux_arm32)
+
+#######################################################
+## FreeBSD 32
+#######################################################
+
+if (${AXL_TARGET_PLATFORM} STREQUAL freeBSD_x86-32)
+  if (${USE_BABEL_AND_NS} STREQUAL yes)
+    set(PREPROCESSOR_DEF -DVERSION=\"${AXLVER}\" -D__axl_disable_broken_bool_def__ -DAXL_NS_SUPPORT -DAXL_BABEL_SUPPORT)
+  else (${USE_BABEL_AND_NS} STREQUAL yes)  
+    set(PREPROCESSOR_DEF -DVERSION=\"${AXLVER}\" -D__axl_disable_broken_bool_def__)
+  endif (${USE_BABEL_AND_NS} STREQUAL yes)
+  
+  ADD_DEFINITIONS ("-m32")
+  set(CMAKE_CXX_FLAGS "-m32")
+  set(CMAKE_SHARED_LINKER_FLAGS "-m32")
+
+  set(TARGET_TEST test_01)
+  set(BUILD_STATIC false)
+
+endif (${AXL_TARGET_PLATFORM} STREQUAL freeBSD_x86-32)
+
+#######################################################
+## FreeBSD 64
+#######################################################
+
+if (${AXL_TARGET_PLATFORM} STREQUAL freeBSD_x86-64)
+  if (${USE_BABEL_AND_NS} STREQUAL yes)
+    set(PREPROCESSOR_DEF -DVERSION=\"${AXLVER}\" -D__axl_disable_broken_bool_def__ -DAXL_NS_SUPPORT -DAXL_BABEL_SUPPORT)
+  else (${USE_BABEL_AND_NS} STREQUAL yes)  
+    set(PREPROCESSOR_DEF -DVERSION=\"${AXLVER}\" -D__axl_disable_broken_bool_def__)
+  endif (${USE_BABEL_AND_NS} STREQUAL yes)
+  
+  ADD_DEFINITIONS ("-m64")
+  set(CMAKE_CXX_FLAGS "-m64")
+  set(CMAKE_SHARED_LINKER_FLAGS "-m64")
+
+  set(TARGET_TEST test_01)
+  set(BUILD_STATIC false)
+
+endif (${AXL_TARGET_PLATFORM} STREQUAL freeBSD_x86-64)
 
 INCLUDE_DIRECTORIES (.)
 INCLUDE_DIRECTORIES (../src)
@@ -90,7 +133,9 @@ ADD_EXECUTABLE (${TARGET_TEST} ${TEST_SOURCES})
 
 ADD_DEFINITIONS (${PREPROCESSOR_DEF})
 
-#LINK_DIRECTORIES (${CMAKE_BINARY_DIR}/build/static)
+if (${BUILD_STATIC} STREQUAL true)
+  LINK_DIRECTORIES (${CMAKE_BINARY_DIR}/build/static)
+endif (${BUILD_STATIC} STREQUAL true)
 
 TARGET_LINK_LIBRARIES(${TARGET_TEST} ${AXL_LIB_NAME} ${AXL_BABEL_LIB_NAME} ${AXL_NS_LIB_NAME}) 
 
