@@ -65,12 +65,6 @@ set (CPACK_PACKAGE_VERSION_PATCH "${AXL_MICRO_VERSION}")
 set (PLATFORM_FOUND false)
 
 #######################################################
-## set paths to look up binaries, libraries and includes
-#######################################################
-set (CMAKE_PREFIX_PATH  /usr)
-set (CMAKE_PREFIX_PATH  ${CMAKE_PREFIX_PATH} /usr/local)
-
-#######################################################
 ## Windows 64 bit
 #######################################################
 if (${AXL_TARGET_PLATFORM} STREQUAL win_x86-64)
@@ -268,7 +262,7 @@ if (${PLATFORM_FOUND} STREQUAL true)
   #######################################################
   ADD_SUBDIRECTORY( src   ${PROJECT}/axl)
   
-  #########l####################
+  #############################
   # With axl_babel and axl_ns:
   if (${USE_BABEL_AND_NS} STREQUAL yes)
     ADD_SUBDIRECTORY( babel ${PROJECT}/babel)
