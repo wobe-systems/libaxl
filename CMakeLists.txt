@@ -247,6 +247,56 @@ if (${AXL_TARGET_PLATFORM} STREQUAL freeBSD_x86-64)
 endif (${AXL_TARGET_PLATFORM} STREQUAL freeBSD_x86-64)
 
 #######################################################
+## OSX 32 bit
+#######################################################
+if (${AXL_TARGET_PLATFORM} STREQUAL osx_x86-32)
+
+  set(PROJECT osx_x86-32)
+  
+  set(OSPLATFORM "AXL_OS_UNIX (1)")  
+  set(INTTOPTR   "INT_TO_PTR(integer)   ((axlPointer) (long) ((int)integer))")
+  set(PTRTOINT   "PTR_TO_INT(ptr) ((int) (long) (ptr))")  
+  set(VASPRINTF  "AXL_HAVE_VASPRINTF (1)")
+
+  configure_file (
+   "${CMAKE_SOURCE_DIR}/src/axl_config.h.in"
+   "${CMAKE_SOURCE_DIR}/src/axl_config.h")
+
+  set(CPACK_SET_DESTDIR ON)
+  set(CPACK_RESOURCE_FILE_LICENSE ../COPYING)
+  
+  include (CPack)
+
+  set (PLATFORM_FOUND true)  
+  
+endif (${AXL_TARGET_PLATFORM} STREQUAL osx_x86-32)
+
+#######################################################
+## OSX 64 bit
+#######################################################
+if (${AXL_TARGET_PLATFORM} STREQUAL osx_x86-64)
+
+  set(PROJECT osx_x86-64)
+  
+  set(OSPLATFORM "AXL_OS_UNIX (1)")  
+  set(INTTOPTR   "INT_TO_PTR(integer)   ((axlPointer) (long) ((int)integer))")
+  set(PTRTOINT   "PTR_TO_INT(ptr) ((int) (long) (ptr))")  
+  set(VASPRINTF  "AXL_HAVE_VASPRINTF (1)")
+
+  configure_file (
+   "${CMAKE_SOURCE_DIR}/src/axl_config.h.in"
+   "${CMAKE_SOURCE_DIR}/src/axl_config.h")
+
+  set(CPACK_SET_DESTDIR ON)
+  set(CPACK_RESOURCE_FILE_LICENSE ../COPYING)
+  
+  include (CPack)
+
+  set (PLATFORM_FOUND true)  
+  
+endif (${AXL_TARGET_PLATFORM} STREQUAL osx_x86-64)
+
+#######################################################
 
 if (${PLATFORM_FOUND} STREQUAL true)
 
